@@ -33,6 +33,7 @@ import {
   type DelayPrediction,
 } from "@/lib/data"
 import { riskBadge, riskTone } from "@/lib/status"
+import { buildApiUrl } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 export default function InsightsPage() {
@@ -41,7 +42,7 @@ export default function InsightsPage() {
   const [pipelineData, setPipelineData] = useState<any>(null)
 
   useEffect(() => {
-    fetch("/api/government-data/sync")
+    fetch(buildApiUrl("/api/government-data/sync"))
       .then((res) => res.json())
       .then((data) => setPipelineData(data))
       .catch(() => {})
@@ -50,7 +51,7 @@ export default function InsightsPage() {
   const handleManualSync = async () => {
     setSyncing(true)
     try {
-      const res = await fetch("/api/government-data/sync", {
+      const res = await fetch(buildApiUrl("/api/government-data/sync"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ resourceId: "ogd-msme-clearances-2026" }),

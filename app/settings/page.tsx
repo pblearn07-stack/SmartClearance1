@@ -24,6 +24,7 @@ import { Input, Label } from "@/components/ui/input"
 import { Select } from "@/components/ui/select"
 import { useToast } from "@/components/ui/toast"
 import { company } from "@/lib/data"
+import { buildApiUrl } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
@@ -89,7 +90,7 @@ export default function SettingsPage() {
   const handleTestConnection = async () => {
     setTestingConnection(true)
     try {
-      const res = await fetch("/api/government-data/sync", {
+      const res = await fetch(buildApiUrl("/api/government-data/sync"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ apiKey: ogdKey, baseUrl: ogdUrl }),
